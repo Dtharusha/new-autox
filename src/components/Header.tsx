@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Menu, X, User, LogOut, Home, Truck, Package, Info, Phone, UserPlus } from 'lucide-react';
+import { Menu, X, User, LogOut, Home, Truck, Package, Info, Phone, UserPlus, Settings, Wrench } from 'lucide-react';
 import { User as UserType } from '../types';
 
-type ViewType = 'home' | 'vehicles' | 'materials' | 'about' | 'contact' | 'signup' | 'dashboard' | 'profile' | 'confirmation' | 'services' | 'vehicle-listing' | 'material-listing' | 'vehicle-details' | 'vehicle-management';
+type ViewType = 'home' | 'vehicles' | 'materials' | 'about' | 'contact' | 'signup' | 'dashboard' | 'profile' | 'confirmation' | 'services' | 'vehicle-listing' | 'material-listing' | 'vehicle-details' | 'vehicle-management' | 'material-management';
 
 interface HeaderProps {
   user: UserType | null;
@@ -44,9 +44,16 @@ export const Header: React.FC<HeaderProps> = ({
             { id: 'contact', label: 'Contact', icon: Phone }
           ];
         case 'vehicle_owner':
+          return [
+            { id: 'dashboard', label: 'Dashboard', icon: Home },
+            { id: 'vehicle-management', label: 'Vehicle Management', icon: Wrench },
+            { id: 'about', label: 'About', icon: Info },
+            { id: 'contact', label: 'Contact', icon: Phone }
+          ];
         case 'material_supplier':
           return [
             { id: 'dashboard', label: 'Dashboard', icon: Home },
+            { id: 'material-management', label: 'Material Management', icon: Settings },
             { id: 'about', label: 'About', icon: Info },
             { id: 'contact', label: 'Contact', icon: Phone }
           ];
@@ -84,6 +91,8 @@ export const Header: React.FC<HeaderProps> = ({
   const handleNavClick = (viewId: string) => {
     if (viewId === 'home') {
       onHomeNavigate();
+    } else if (viewId === 'vehicle-management' || viewId === 'material-management') {
+      onNavigate('vehicle-management' as ViewType);
     } else {
       onNavigate(viewId as ViewType);
     }
